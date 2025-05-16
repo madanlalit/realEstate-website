@@ -1,15 +1,26 @@
 "use strict";
 
-const $navbar = document.querySelector("[data-navbar]");
-const $navToggler = document.querySelector("[data-nav-toggler]");
+// Utility function to safely select elements
+const $ = selector => document.querySelector(selector);
 
-$navToggler.addEventListener("click", () => $navbar.classList.toggle("active"));
+// Navbar toggle
+const $navbar = $("[data-navbar]");
+const $navToggler = $("[data-nav-toggler]");
 
-const $header = document.querySelector("[data-header]");
+if ($navbar && $navToggler) {
+    $navToggler.addEventListener("click", () => {
+        $navbar.classList.toggle("active");
+    });
+} else {
+    console.warn("Navbar or nav toggler not found.");
+}
+
+// Header scroll effect
+const $header = $("[data-header]");
 
 if ($header) {
-    window.addEventListener("scroll", e => { // CORRECTED: "scroll" (string)
-        $header.classList[window.scrollY > 50 ? "add" : "remove"]("active");
+    window.addEventListener("scroll", () => {
+        $header.classList.toggle("active", window.scrollY > 50);
     });
 } else {
     console.warn("Header element with [data-header] not found. Scroll event listener not added.");
