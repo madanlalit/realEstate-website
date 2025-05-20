@@ -31,9 +31,9 @@
     /* Typography */
     --font-primary: 'Montserrat', sans-serif;
     --fs-base: 62.5%;
-    --fs-headline-large: 3.6rem;
+    --fs-headline-large: clamp(2.8rem, 4vw, 3.6rem);
     --fs-headline-medium: 2.8rem;
-    --fs-headline-small: 2.8rem;
+    --fs-headline-small: 2.4rem;
     --fs-title-large: 2.2rem;
     --fs-title-medium: 2rem;
     --fs-title-small: 1.8rem;
@@ -44,7 +44,7 @@
 
     --lh-headline-large: 4.4rem;
     --lh-headline-medium: 3.6rem;
-    --lh-headline-small: 3.6rem;
+    --lh-headline-small: 3.2rem;
     --lh-title-large: 2.8rem;
     --lh-title-medium: 2.4rem;
     --lh-title-small: 2.4rem;
@@ -69,15 +69,34 @@
     --radius-circle: 50%;
 
     /* Shadows */
-    --shadow-1: 0 0.2rem 0.4rem 0 #0003;
-    --shadow-2: 0 0.5rem 1rem 0 #0001;
-    --shadow-3: 0 0.5rem 1rem 0 #0003;
-    --shadow-4: 0 1rem 2rem 0 #0002;
+    --shadow-1: 0 2px 8px 0 #0002;
+    --shadow-2: 0 4px 16px 0 #0001;
+    --shadow-3: 0 6px 24px 0 #0003;
+    --shadow-4: 0 8px 32px 0 #0002;
 
     /* Transitions */
     --transition-easing-quick: cubic-bezier(0, 0.7, 0.3, 1);
     --transition-duration-quick: 200ms;
     --transition-duration-smooth: 500ms;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --neutral-100: #18191A;
+        --neutral-98: #222326;
+        --neutral-95: #23272F;
+        --neutral-90: #303133;
+        --neutral-80: #494A4D;
+        --neutral-60: #616366;
+        --neutral-50: #797C80;
+        --neutral-40: #919499;
+        --neutral-30: #C2C6CC;
+        --neutral-20: #DADFE5;
+        --neutral-10: #E9ECF2;
+        --neutral-5: #FAFCFF;
+        --white: #0C0C0D;
+    }
 }
 
 /* Reset and base styles */
@@ -96,7 +115,7 @@ a {
     text-decoration: none;
 }
 
-img { height: auto; }
+img { height: auto; max-width: 100%; }
 
 input, button, select {
     background: none;
@@ -219,6 +238,10 @@ body {
     border-radius: var(--radius-full);
     max-width: max-content;
     transition: background var(--transition-duration-quick) var(--transition-easing-quick), box-shadow var(--transition-duration-quick) var(--transition-easing-quick);
+    outline: none;
+}
+.btn:focus-visible {
+    box-shadow: 0 0 0 3px var(--primary-100);
 }
 
 .btn-fill {
