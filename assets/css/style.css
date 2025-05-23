@@ -1,6 +1,10 @@
+/* ==========================================================================
+   1. Root Variables & Basic Configuration
+   ========================================================================== */
 :root {
-    /* Colors */
+    /* Base Colors (Palette) */
     --white: #fff;
+    --black: #000;
     --yellow: #F6BD26;
     --primary-100: #2179FF;
     --primary-90: #1E6DE5;
@@ -8,57 +12,74 @@
     --primary-70: #1755B2;
     --primary-40: #0D3166;
     --primary-20: #071833;
-    --secondary-100: #21FFFF;
+    --secondary-100: #21FFFF; /* Consider usage & dark mode contrast */
     --secondary-20: #073333;
-    --neutral-100: #FAFCFF;
-    --neutral-98: #F2F5FA;
+    --neutral-100: #FAFCFF; /* Lightest neutral / Often card backgrounds */
+    --neutral-98: #F2F5FA;  /* Often page background */
     --neutral-95: #E9ECF2;
-    --neutral-90: #DADFE5;
+    --neutral-90: #DADFE5;  /* Borders, subtle elements */
     --neutral-80: #C2C6CC;
     --neutral-60: #919499;
-    --neutral-50: #797C80;
+    --neutral-50: #797C80;  /* Secondary text */
     --neutral-40: #616366;
     --neutral-30: #494A4D;
-    --neutral-20: #303133;
-    --neutral-10: #18191A;
-    --neutral-5: #0C0C0D;
+    --neutral-20: #303133;  /* Primary text on light bg */
+    --neutral-10: #18191A;  /* Stronger text / Headings on light bg */
+    --neutral-5: #0C0C0D;   /* Darkest neutral */
     --error-100: #FF2134;
-    --base-blue: #0d3166;
+    --success-100: #28a745; /* Example success color */
 
     /* Gradients */
-    --gradient: linear-gradient(to bottom, var(--base-blue), #051a33);
+    --gradient-hero: linear-gradient(to bottom, var(--primary-40), #051a33); /* Renamed for clarity */
+
+    /* Semantic Color Variables (Theme Layer) */
+    --clr-text-body: var(--neutral-20);
+    --clr-text-headings: var(--neutral-10);
+    --clr-text-subtle: var(--neutral-50);
+    --clr-text-on-primary: var(--white);
+    --clr-text-on-dark-bg: var(--neutral-90); /* For text on dark backgrounds like hero */
+    --clr-text-link: var(--primary-100);
+    --clr-text-error: var(--error-100);
+    --clr-text-success: var(--success-100);
+
+    --clr-bg-page: var(--neutral-98);
+    --clr-bg-card: var(--neutral-100);
+    --clr-bg-interactive: var(--primary-100);
+    --clr-bg-hero: var(--gradient-hero);
+    --clr-bg-overlay: rgba(0, 0, 0, 0.5); /* Example for modals/popups */
+
+    --clr-border-subtle: var(--neutral-90);
+    --clr-border-interactive: var(--primary-100);
+    --clr-border-focus-ring: var(--primary-100);
+
+    --clr-icon-default: var(--neutral-40);
+    --clr-icon-accent: var(--primary-100);
 
     /* Typography */
     --font-primary: 'Montserrat', sans-serif;
-    --fs-base: 62.5%;
-    --fs-headline-large: clamp(2.8rem, 4vw, 3.6rem);
+    --fs-base: 62.5%; /* 1rem = 10px, adjust if you prefer 1rem = 16px */
+
+    --fs-headline-large: clamp(2.8rem, 4vw + 1rem, 3.8rem); /* More responsive large headline */
     --fs-headline-medium: 2.8rem;
     --fs-headline-small: 2.4rem;
     --fs-title-large: 2.2rem;
     --fs-title-medium: 2rem;
     --fs-title-small: 1.8rem;
-    --fs-body-large: 1.6rem;
+    --fs-body-large: 1.8rem; /* Slightly larger body option */
     --fs-body-medium: 1.6rem;
     --fs-label-large: 1.6rem;
     --fs-label-medium: 1.4rem;
+    --fs-small: 1.2rem; /* For captions, fine print */
 
-    --lh-headline-large: 4.4rem;
-    --lh-headline-medium: 3.6rem;
-    --lh-headline-small: 3.2rem;
-    --lh-title-large: 2.8rem;
-    --lh-title-medium: 2.4rem;
-    --lh-title-small: 2.4rem;
-    --lh-body-large: 2.4rem;
-    --lh-body-medium: 2.4rem;
-    --lh-label-large: 2.4rem;
-    --lh-label-medium: 2rem;
+    --lh-base: 1.6; /* Default line height for body copy */
+    --lh-headings: 1.3; /* Tighter line height for headings */
 
     --weight-bold: 700;
     --weight-semiBold: 600;
     --weight-regular: 400;
 
-    --tracking-n-025: -0.025rem;
-    --tracking-p-05: 0.05rem;
+    --tracking-n-025: -0.025em; /* Use em for letter-spacing for scalability */
+    --tracking-p-05: 0.05em;
 
     /* Radius */
     --radius-small: 0.8rem;
@@ -68,23 +89,52 @@
     --radius-full: 1000px;
     --radius-circle: 50%;
 
-    /* Shadows */
-    --shadow-1: 0 2px 8px 0 #0002;
-    --shadow-2: 0 4px 16px 0 #0001;
-    --shadow-3: 0 6px 24px 0 #0003;
-    --shadow-4: 0 8px 32px 0 #0002;
+    /* Shadows - consider more nuanced shadows */
+    --shadow-1: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-2: 0 4px 8px rgba(0,0,0,0.07);
+    --shadow-3: 0 6px 16px rgba(0,0,0,0.08);
+    --shadow-4: 0 10px 30px rgba(0,0,0,0.1);
 
     /* Transitions */
-    --transition-easing-quick: cubic-bezier(0, 0.7, 0.3, 1);
-    --transition-duration-quick: 200ms;
-    --transition-duration-smooth: 500ms;
+    --transition-easing-quick: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --transition-duration-short: 200ms;
+    --transition-duration-medium: 300ms;
+    --transition-duration-long: 500ms;
+    --transition-default: all var(--transition-duration-medium) var(--transition-easing-quick);
+
+    /* Spacing (Consistent margins/paddings) */
+    --space-xs: 0.4rem;
+    --space-sm: 0.8rem;
+    --space-md: 1.6rem;
+    --space-lg: 2.4rem;
+    --space-xl: 3.2rem;
+    --space-xxl: 4.8rem;
+
+    /* Z-index */
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-modal-backdrop: 30;
+    --z-modal: 40;
+    --z-header: 50;
+    --z-skip-link: 100;
 }
 
-/* Dark mode support */
+/* ==========================================================================
+   2. Dark Mode
+   ========================================================================== */
 @media (prefers-color-scheme: dark) {
     :root {
-        --neutral-100: #18191A;
-        --neutral-98: #222326;
+        /* Base Color Overrides for Dark Mode */
+        --white: #0C0C0D;
+        --black: #ffffff;
+        --yellow: #F8C548; /* Slightly adjusted yellow for dark bg if needed */
+
+        --primary-100: #3B8AFF; /* Ensure sufficient contrast for primary in dark mode */
+        --primary-90: #2A79F0;
+        /* ... other primary shades might need slight tweaks */
+
+        --neutral-100: #18191A; /* Darkest */
+        --neutral-98: #1C1D1F;
         --neutral-95: #23272F;
         --neutral-90: #303133;
         --neutral-80: #494A4D;
@@ -92,186 +142,296 @@
         --neutral-50: #797C80;
         --neutral-40: #919499;
         --neutral-30: #C2C6CC;
-        --neutral-20: #DADFE5;
-        --neutral-10: #E9ECF2;
-        --neutral-5: #FAFCFF;
-        --white: #0C0C0D;
+        --neutral-20: #DADFE5; /* Primary text on dark bg */
+        --neutral-10: #E9ECF2; /* Headings on dark bg */
+        --neutral-5: #FAFCFF;  /* Lightest */
+
+        /* Semantic Color Overrides for Dark Mode */
+        --clr-text-body: var(--neutral-20);
+        --clr-text-headings: var(--neutral-10);
+        --clr-text-subtle: var(--neutral-40);
+        --clr-text-on-primary: var(--black); /* If primary-100 is light enough */
+        --clr-text-on-dark-bg: var(--neutral-10);
+
+        --clr-bg-page: var(--neutral-100); /* Darkest as page bg */
+        --clr-bg-card: var(--neutral-98);  /* Slightly lighter for cards */
+        /* --clr-bg-interactive: var(--primary-80); /* Example: Darker primary for BG in dark */
+
+        --clr-border-subtle: var(--neutral-80);
+        --clr-border-focus-ring: var(--primary-90);
+
+        --clr-icon-default: var(--neutral-30);
+
+        /* Shadows for dark mode might need to be lighter or use different colors */
+        --shadow-1: 0 2px 4px rgba(0,0,0,0.2);
+        --shadow-2: 0 4px 8px rgba(0,0,0,0.25);
     }
 }
 
-/* Reset and base styles */
+/* ==========================================================================
+   3. Reset and Base Styles
+   ========================================================================== */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    font-family: var(--font-primary);
+    font-size: var(--fs-base);
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+}
+
+body {
+    background-color: var(--clr-bg-page);
+    color: var(--clr-text-body);
+    font-size: var(--fs-body-medium);
+    line-height: var(--lh-base);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 li { list-style: none; }
 
-a, img, span, input, select, button { display: block; }
-
 a {
-    color: inherit;
+    color: var(--clr-text-link);
     text-decoration: none;
+    transition: color var(--transition-duration-short) ease;
+}
+a:hover, a:focus {
+    color: var(--primary-80); /* Or a darker shade of --clr-text-link */
 }
 
-img { height: auto; max-width: 100%; }
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
 
-input, button, select {
+input, button, textarea, select {
+    font: inherit;
+    color: inherit;
     background: none;
     border: none;
-    font: inherit;
 }
 
-button { cursor: pointer; }
+button {
+    cursor: pointer;
+    display: inline-flex; /* For aligning text/icons */
+    align-items: center;
+    justify-content: center;
+}
 
-input, select {
+input, select, textarea {
     width: 100%;
     outline: none;
+    border-radius: var(--radius-small); /* Default radius for form fields */
 }
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--clr-border-focus-ring);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(var(--primary-100_rgb, 33, 121, 255), 0.2); /* Optional softer glow */
+}
+/* Placeholder for --primary-100_rgb: create CSS vars for R,G,B values of primary if needed for rgba() */
+/* Example: --primary-100_rgb: 33, 121, 255; */
 
-address { font-style: normal; }
 
 select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    /* Custom arrow will be needed for selects */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23616366'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-sm) center;
+    background-size: 1.8em;
+    padding-right: calc(var(--space-sm) + 1.8em); /* Space for arrow */
 }
 
-html {
-    font-family: var(--font-primary);
-    font-size: var(--fs-base);
-    scroll-behavior: smooth;
-}
+address { font-style: normal; }
 
-body {
-    background-color: var(--neutral-98);
-    color: var(--neutral-5);
-    font-size: var(--fs-body-medium);
-    line-height: var(--lh-body-medium);
-    min-height: 100vh;
-}
+/* Custom Scrollbar (Optional) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--neutral-90); border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: var(--neutral-60); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--neutral-50); }
 
-/* Scrollbar styling */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--neutral-90); }
-::-webkit-scrollbar-thumb {
-    background: var(--neutral-60);
-    border-radius: 4px;
-}
 
-/* Typography utilities */
+/* ==========================================================================
+   4. Typography Utilities
+   ========================================================================== */
 .headline-large {
     font-size: var(--fs-headline-large);
-    line-height: var(--lh-headline-large);
+    line-height: var(--lh-headings);
     font-weight: var(--weight-bold);
     letter-spacing: var(--tracking-n-025);
+    color: var(--clr-text-headings);
 }
 .headline-medium {
     font-size: var(--fs-headline-medium);
-    line-height: var(--lh-headline-medium);
+    line-height: var(--lh-headings);
     font-weight: var(--weight-bold);
+    color: var(--clr-text-headings);
 }
 .headline-small {
     font-size: var(--fs-headline-small);
-    line-height: var(--lh-headline-small);
+    line-height: var(--lh-headings);
     font-weight: var(--weight-bold);
+    color: var(--clr-text-headings);
 }
 .title-large {
     font-size: var(--fs-title-large);
-    line-height: var(--lh-title-large);
+    line-height: var(--lh-headings);
     font-weight: var(--weight-semiBold);
+    color: var(--clr-text-headings);
 }
 .title-medium {
     font-size: var(--fs-title-medium);
-    line-height: var(--lh-title-medium);
+    line-height: var(--lh-headings);
     font-weight: var(--weight-semiBold);
+    color: var(--clr-text-headings);
 }
 .title-small {
     font-size: var(--fs-title-small);
-    line-height: var(--lh-title-small);
+    line-height: var(--lh-base);
     font-weight: var(--weight-semiBold);
+    color: var(--clr-text-headings);
 }
 .body-large {
     font-size: var(--fs-body-large);
-    line-height: var(--lh-body-large);
+    line-height: var(--lh-base);
     font-weight: var(--weight-regular);
 }
-.body-medium {
+.body-medium { /* Default body */
     font-size: var(--fs-body-medium);
-    line-height: var(--lh-body-medium);
+    line-height: var(--lh-base);
     font-weight: var(--weight-regular);
 }
 .label-medium {
     font-size: var(--fs-label-medium);
-    line-height: var(--lh-label-medium);
+    line-height: var(--lh-base);
     font-weight: var(--weight-semiBold);
     letter-spacing: var(--tracking-p-05);
+    text-transform: uppercase; /* Labels often are */
+}
+.text-small {
+    font-size: var(--fs-small);
+    line-height: var(--lh-base);
+    color: var(--clr-text-subtle);
 }
 
-/* Material icons */
+/* ==========================================================================
+   5. Iconography (Material Symbols)
+   ========================================================================== */
 .material-symbols-rounded {
-    display: block;
-    width: 1em;
-    height: 1em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em; /* Relative to parent font size */
+    height: 1em; /* Relative to parent font size */
+    font-size: inherit; /* Ensures icon scales with text */
     overflow: hidden;
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    font-family: 'Material Symbols Rounded';
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; /* Default settings */
+    font-family: 'Material Symbols Rounded', sans-serif; /* Ensure fallback */
+    vertical-align: middle; /* Adjust as needed: text-bottom, sub, etc. */
+    flex-shrink: 0; /* Prevent shrinking in flex containers */
+}
+/* Example: Filled icon */
+.material-symbols-rounded.filled { font-variation-settings: 'FILL' 1; }
+/* Example: Larger icon */
+.material-symbols-rounded.large { font-size: 2.4rem; /* Or use --fs-vars */ }
+
+
+/* ==========================================================================
+   6. Layout Utilities & Components
+   ========================================================================== */
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 58rem; /* Mobile first narrow container */
+    margin-inline: auto;
+    padding-inline: var(--space-md);
 }
 
-/* Layout */
-.container {
-    padding-inline: 1.6rem;
-    max-width: 58rem;
-    width: 100%;
-    margin-inline: auto;
+/* Section Base */
+.section {
+    padding-block: var(--space-xxl); /* Consistent vertical spacing for sections */
 }
 
 /* Buttons */
 .btn {
-    display: flex;
+    display: inline-flex; /* Already in base, but good to be explicit */
     justify-content: center;
     align-items: center;
-    gap: 1.2rem;
+    gap: var(--space-sm);
     height: 4.8rem;
-    padding-inline: 2.4rem;
+    padding: 0 var(--space-lg);
     border-radius: var(--radius-full);
-    max-width: max-content;
-    transition: background var(--transition-duration-quick) var(--transition-easing-quick), box-shadow var(--transition-duration-quick) var(--transition-easing-quick);
-    outline: none;
+    font-weight: var(--weight-semiBold);
+    font-size: var(--fs-label-medium); /* Or --fs-body-medium */
+    text-transform: capitalize; /* Or none */
+    white-space: nowrap;
+    transition: var(--transition-default);
+    border: 2px solid transparent; /* For consistent sizing with outline btn */
+    outline: none; /* Custom focus below */
 }
 .btn:focus-visible {
-    box-shadow: 0 0 0 3px var(--primary-100);
+    outline: 2px solid var(--clr-border-focus-ring);
+    outline-offset: 3px;
+    /* box-shadow: 0 0 0 3px var(--clr-border-focus-ring); */ /* Alternative focus */
 }
 
 .btn-fill {
-    background: var(--primary-100);
-    color: var(--neutral-100);
+    background-color: var(--clr-bg-interactive);
+    color: var(--clr-text-on-primary);
+    border-color: var(--clr-bg-interactive);
 }
 .btn-fill:hover,
 .btn-fill:focus-visible {
-    background: var(--primary-90);
+    background-color: var(--primary-90);
+    border-color: var(--primary-90);
     box-shadow: var(--shadow-1);
 }
 .btn-fill:active {
-    background: var(--primary-80);
+    background-color: var(--primary-80);
+    border-color: var(--primary-80);
 }
 
 .btn-outline {
-    color: var(--primary-100);
-    box-shadow: inset 0 0 0 2px var(--primary-100);
-    background: transparent;
+    background-color: transparent;
+    color: var(--clr-text-link);
+    border: 2px solid var(--clr-border-interactive);
 }
 .btn-outline:hover,
 .btn-outline:focus-visible {
-    color: var(--neutral-100);
-    background: var(--primary-100);
-}
-.btn-outline:focus {
-    background: var(--primary-90);
+    background-color: var(--clr-bg-interactive);
+    color: var(--clr-text-on-primary);
+    border-color: var(--clr-bg-interactive);
 }
 .btn-outline:active {
-    background: var(--primary-80);
+    background-color: var(--primary-80);
+    border-color: var(--primary-80);
+}
+
+.btn-link { /* For text-like buttons */
+    padding: var(--space-xs) var(--space-sm);
+    height: auto;
+    background-color: transparent;
+    color: var(--clr-text-link);
+    border-radius: var(--radius-small);
+    text-transform: none;
+}
+.btn-link:hover,
+.btn-link:focus-visible {
+    background-color: rgba(var(--primary-100_rgb, 33, 121, 255), 0.1); /* Subtle hover */
+    color: var(--primary-80);
 }
 
 .icon-btn {
@@ -279,58 +439,92 @@ body {
     width: 4rem;
     display: grid;
     place-items: center;
-    background: var(--neutral-100);
-    color: var(--neutral-10);
+    background: var(--clr-bg-card);
+    color: var(--clr-icon-default);
     border-radius: var(--radius-small);
-    box-shadow: var(--shadow-3);
-    transition: background var(--transition-duration-quick) var(--transition-easing-quick);
+    box-shadow: var(--shadow-2);
+    transition: var(--transition-default);
 }
 .icon-btn:hover,
 .icon-btn:focus-visible {
-    background: var(--neutral-90);
+    background: var(--neutral-95);
+    color: var(--clr-icon-accent);
+    box-shadow: var(--shadow-3);
+}
+.icon-btn .material-symbols-rounded {
+    font-size: 2rem; /* Or adjust as needed */
 }
 
-/* Navbar */
-.navbar {
-    position: absolute;
-    top: 85%;
-    right: 1.6rem;
-    background: var(--neutral-100);
-    min-width: 26rem;
-    padding: 1rem;
+/* Cards (General Purpose) */
+.card {
+    background: var(--clr-bg-card);
     border-radius: var(--radius-large);
-    visibility: hidden;
-    opacity: 0;
-    scale: 0.4;
-    transition: opacity var(--transition-duration-quick) var(--transition-easing-quick), scale var(--transition-duration-quick) var(--transition-easing-quick);
-    box-shadow: var(--shadow-1);
-    transform-origin: top right;
-    z-index: 4;
-    display: grid;
-    gap: 0.8rem;
+    box-shadow: var(--shadow-2);
+    overflow: hidden;
+    transition: box-shadow var(--transition-duration-medium) var(--transition-easing-quick);
+    display: flex;
+    flex-direction: column;
 }
-.navbar.active {
-    visibility: visible;
-    opacity: 1;
-    scale: 1;
+.card:hover,
+.card:focus-within { /* focus-within for when an element inside the card gets focus */
+    box-shadow: var(--shadow-4);
 }
-.navbar-link, .btn-link {
-    color: var(--neutral-30);
-    padding: 0.6rem 1.2rem;
-    transition: color var(--transition-duration-quick) var(--transition-easing-quick);
+
+.card-img-figure { /* Wrapper for image if needed, e.g. for aspect ratio or link */
+    position: relative;
+    overflow: hidden;
 }
-.btn-link {
-    border-block-start: 1px solid var(--neutral-90);
-    padding-block-start: 1.4rem;
+.card-img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 16 / 9; /* Common aspect ratio for card images */
+    transition: transform var(--transition-duration-medium) ease;
 }
-.navbar-link:hover,
-.navbar-link:focus-visible,
-.btn-link:hover,
-.btn-link:focus-visible,
-.navbar-link.active {
-    color: var(--primary-100);
+.card:hover .card-img,
+.card:focus-within .card-img {
+    transform: scale(1.05); /* Subtle zoom on hover */
 }
-.navbar .btn { min-width: 100%; }
+
+.card-content {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm); /* Space between elements in card content */
+    flex-grow: 1; /* Allows content to fill space if card has fixed height */
+}
+
+.card-title {
+    font-size: var(--fs-title-medium); /* Or --fs-title-large */
+    font-weight: var(--weight-semiBold);
+    color: var(--clr-text-headings);
+    margin-bottom: var(--space-xs);
+}
+.card-title a {
+    color: inherit; /* Ensure link in title inherits card title color */
+    text-decoration: none;
+}
+.card-title a:hover {
+    text-decoration: underline;
+}
+
+.card-text { /* Generic text within a card */
+    font-size: var(--fs-body-medium);
+    color: var(--clr-text-subtle);
+    line-height: var(--lh-base);
+}
+
+.card-actions {
+    margin-top: auto; /* Pushes actions to the bottom if card content has flex-grow */
+    padding-top: var(--space-md); /* Space above actions */
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap; /* Allow buttons to wrap if not enough space */
+}
+
+/* ==========================================================================
+   7. Page Specific Components
+   ========================================================================== */
 
 /* Header */
 .header {
@@ -338,20 +532,23 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 10rem;
-    z-index: 4;
+    height: 10rem; /* Initial height */
+    z-index: var(--z-header);
     background: transparent;
-    transition: height var(--transition-duration-quick) var(--transition-easing-quick), background var(--transition-duration-quick) var(--transition-easing-quick);
+    transition: height var(--transition-duration-short) var(--transition-easing-quick),
+                background-color var(--transition-duration-short) var(--transition-easing-quick),
+                box-shadow var(--transition-duration-short) var(--transition-easing-quick);
 }
-.header.active {
-    animation: slide_in 0.5s ease forwards;
+.header.active { /* Scrolled state */
     height: 7.2rem;
-    background: var(--primary-40);
+    background: var(--primary-40); /* Or a semi-transparent dark color */
+    box-shadow: var(--shadow-3);
+    /* animation: slide_in 0.5s ease forwards; /* Consider if still needed */
 }
-@keyframes slide_in {
+/* @keyframes slide_in {
     0% { transform: translateY(-100%); }
     100% { transform: translateY(0); }
-}
+} */
 .header .container {
     position: relative;
     display: flex;
@@ -359,77 +556,185 @@ body {
     align-items: center;
     height: 100%;
 }
+.logo img {
+    height: 2.8rem; /* Adjust as per your logo aspect ratio */
+    width: auto;
+    transition: height var(--transition-duration-short) ease;
+}
+.header.active .logo img {
+    height: 2.4rem;
+}
 
-/* Nav toggle button */
+/* Main Navigation (Mobile-first: dropdown) */
+.navbar {
+    position: absolute;
+    top: calc(100% + var(--space-sm)); /* Position below header */
+    right: var(--space-md);
+    background: var(--clr-bg-card);
+    min-width: 26rem;
+    padding: var(--space-sm);
+    border-radius: var(--radius-medium);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    transition: opacity var(--transition-duration-short) var(--transition-easing-quick),
+                visibility var(--transition-duration-short) var(--transition-easing-quick),
+                transform var(--transition-duration-short) var(--transition-easing-quick);
+    box-shadow: var(--shadow-3);
+    transform-origin: top right;
+    z-index: var(--z-dropdown);
+    display: grid;
+    gap: var(--space-xs);
+}
+.navbar.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+.navbar-list {
+    display: contents; /* Allow li to be direct grid children */
+}
+.navbar-link, .navbar .btn-link { /* .navbar .btn-link for login inside mobile nav */
+    color: var(--clr-text-subtle);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-small);
+    transition: color var(--transition-duration-short) ease, background-color var(--transition-duration-short) ease;
+    font-weight: var(--weight-semiBold);
+    display: block; /* Make links full width */
+    text-align: left;
+}
+.navbar .btn-link { /* Specific styling for login link if it's special */
+    border-top: 1px solid var(--clr-border-subtle);
+    margin-top: var(--space-xs);
+    padding-top: var(--space-sm);
+}
+.navbar-link:hover,
+.navbar-link:focus-visible,
+.navbar .btn-link:hover,
+.navbar .btn-link:focus-visible,
+.navbar-link[aria-current="page"] {
+    color: var(--clr-text-link);
+    background-color: rgba(var(--primary-100_rgb, 33, 121, 255), 0.05);
+}
+.navbar .btn { /* "Get Started" button in mobile nav */
+    min-width: 100%;
+    margin-top: var(--space-xs);
+}
+
+/* Nav Toggle Button (Hamburger) */
+.nav-toggle-btn {
+    display: grid; /* For icon-btn base styles */
+    /* display: none; /* Hide on larger screens if nav changes */
+}
 .nav-toggle-btn .close,
 .nav-toggle-btn.active .open { display: none; }
+
 .nav-toggle-btn .open,
 .nav-toggle-btn.active .close { display: block; }
 
-/* Hero section */
-.hero-banner { display: none; }
+
+/* Hero Section */
 .hero {
     position: relative;
-    background: var(--gradient);
-    color: var(--neutral-90);
-    padding-block: 13rem 6rem;
+    background: var(--clr-bg-hero);
+    color: var(--clr-text-on-dark-bg);
+    padding-block: calc(var(--space-xxl) + 5rem) var(--space-xxl); /* Extra top padding */
     overflow: hidden;
-    isolation: isolate;
+    isolation: isolate; /* For z-index stacking context */
+    text-align: center; /* Mobile default */
 }
-.hero-title { color: var(--neutral-100); }
-.hero-text { margin-block: 1.6rem 3.2rem; }
+.hero-title {
+    color: var(--white); /* Direct white from palette for hero titles */
+    margin-bottom: var(--space-md);
+}
+.hero-text {
+    font-size: var(--fs-body-large);
+    margin-block: var(--space-md) var(--space-xl);
+    max-width: 60ch; /* Limit line length for readability */
+    margin-inline: auto; /* Center the text block */
+    opacity: 0.9;
+}
+.hero-banner { display: none; } /* Hidden on mobile */
 
-/* Search bar */
+.hero .bg-pattern { /* Decorative background pattern */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: -1; /* Behind content but above hero background */
+    opacity: 0.1; /* Subtle pattern */
+}
+
+/* Search Bar (in Hero) */
 .search-bar {
-    background: var(--white);
+    background: var(--clr-bg-card); /* Use card background for consistency */
     display: grid;
-    padding: 0.8rem;
-    gap: 0.8rem;
+    padding: var(--space-sm);
+    gap: var(--space-sm);
     border-radius: var(--radius-large);
     box-shadow: var(--shadow-4);
+    margin-top: var(--space-xl);
 }
 .search-item {
     position: relative;
-    color: var(--neutral-50);
+    color: var(--clr-text-subtle);
 }
-.search-item .search-item-field {
-    height: 7.6rem;
-    padding: 4rem 1.6rem 1.2rem;
+/* Wrapper for input/select field and its icon */
+.search-item-field-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-item .label { /* Label above the input */
+    display: block;
+    font-size: var(--fs-small);
+    font-weight: var(--weight-semiBold);
+    color: var(--clr-text-headings);
+    margin-bottom: var(--space-xs);
+    padding-left: var(--space-sm); /* Align with field padding */
+}
+.search-item .search-item-field { /* input or select */
+    height: 5.6rem; /* Adjusted height */
+    padding: var(--space-sm) var(--space-md);
+    padding-right: calc(var(--space-md) + 2em); /* Space for icon if select has custom, or for general icon */
+    border: 1px solid var(--clr-border-subtle);
     border-radius: var(--radius-medium);
-    transition: background var(--transition-duration-quick) var(--transition-easing-quick);
-    cursor: pointer;
+    background-color: var(--clr-bg-page); /* Slightly different from card bg */
+    transition: border-color var(--transition-duration-short) ease,
+                background-color var(--transition-duration-short) ease;
+    cursor: pointer; /* For selects */
 }
 .search-item .search-item-field:hover,
 .search-item .search-item-field:focus-visible {
-    background: var(--neutral-95);
+    border-color: var(--clr-border-interactive);
+    background-color: var(--white); /* Lighten on focus/hover */
 }
-.search-item .label,
-.search-item .material-symbols-rounded {
+.search-item .search-item-field::placeholder {
+    color: var(--clr-text-subtle);
+}
+.search-item .search-item-field-wrapper .material-symbols-rounded { /* Icon inside the field wrapper */
     position: absolute;
-    pointer-events: none;
-}
-.search-item .label {
-    top: 1.2rem;
-    left: 1.6rem;
-    color: var(--neutral-5);
-}
-.search-item .material-symbols-rounded {
     top: 50%;
-    right: 1.6rem;
+    right: var(--space-md);
     transform: translateY(-50%);
-    color: var(--primary-100);
+    color: var(--clr-icon-accent);
+    pointer-events: none; /* So it doesn't interfere with input clicks */
+    font-size: 2rem;
 }
-.search-btn {
-    background: var(--primary-100);
-    color: var(--neutral-100);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 6.4rem;
-    padding-inline: 2.4rem;
-    gap: 1.2rem;
+.search-btn { /* Specific search button in the bar */
+    background: var(--clr-bg-interactive);
+    color: var(--clr-text-on-primary);
+    height: 5.6rem; /* Match field height */
+    padding-inline: var(--space-lg);
+    gap: var(--space-sm);
     border-radius: var(--radius-medium);
-    transition: background var(--transition-duration-quick) var(--transition-easing-quick);
+    transition: background-color var(--transition-duration-short) ease;
+    font-size: var(--fs-body-medium); /* Slightly larger text for main CTA */
+    font-weight: var(--weight-bold);
 }
 .search-btn:hover,
 .search-btn:focus-visible {
@@ -438,13 +743,335 @@ body {
 .search-btn:active {
     background: var(--primary-70);
 }
-.hero .bg-pattern {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    right: 0;
-    transform: translate(-50%, -50%);
-    min-height: 100%;
-    pointer-events: none;
-    z-index: -2;
+
+/* Featured Properties Section */
+.featured-listings .listing-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 30rem), 1fr)); /* Responsive grid */
+    margin-top: var(--space-lg);
+}
+.property-card .property-location,
+.property-card .property-price {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--fs-body-medium);
+}
+.property-card .property-location .material-symbols-rounded {
+    font-size: 1.8rem; /* Slightly smaller icon */
+    color: var(--clr-icon-default);
+}
+.property-card .property-price {
+    font-weight: var(--weight-bold);
+    color: var(--clr-text-headings);
+    font-size: var(--fs-title-small); /* More prominent price */
+    margin-block: var(--space-xs) var(--space-sm);
+}
+.view-all-properties-wrapper {
+    text-align: center;
+    margin-top: var(--space-xl);
+}
+
+/* About Section */
+.about-section .about-content {
+    max-width: 70ch;
+    margin-inline: auto;
+    text-align: center;
+}
+.about-list {
+    display: grid;
+    gap: var(--space-md);
+    margin-block: var(--space-lg) var(--space-xl);
+    text-align: left;
+}
+.about-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--fs-body-large);
+    font-weight: var(--weight-semiBold);
+}
+.about-list .material-symbols-rounded {
+    color: var(--clr-icon-accent);
+    font-size: 2.4rem;
+    background-color: rgba(var(--primary-100_rgb, 33, 121, 255), 0.1);
+    padding: var(--space-xs);
+    border-radius: var(--radius-circle);
+}
+.about-section .btn {
+    margin-inline: auto; /* Center button */
+}
+
+/* Footer */
+.footer {
+    background: var(--primary-40); /* Using a primary shade for footer bg */
+    color: var(--neutral-90); /* Lighter text on dark footer */
+    padding-block: var(--space-xl) var(--space-lg);
+    font-size: var(--fs-label-medium);
+}
+.footer .container {
+    /* Default is mobile: single column, items centered */
+}
+.footer-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    text-align: center;
+}
+.footer-brand .footer-logo-link img {
+    height: 2.2rem; /* Footer logo size */
+    margin-bottom: var(--space-xs);
+}
+.footer-tagline {
+    font-size: var(--fs-small);
+    color: var(--neutral-80); /* Subtler color for tagline */
+    max-width: 40ch;
+}
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-lg) var(--space-xl); /* Row and column gap */
+    width: 100%;
+}
+.footer-nav-col {
+    text-align: center;
+}
+.footer-nav-title {
+    font-weight: var(--weight-bold);
+    color: var(--white); /* Direct white for titles */
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+}
+.footer-nav ul {
+    display: grid;
+    gap: var(--space-xs);
+}
+.footer-link {
+    color: var(--neutral-90);
+    transition: color var(--transition-duration-short) ease;
+}
+.footer-link:hover,
+.footer-link:focus-visible {
+    color: var(--yellow); /* Accent hover for footer links */
+    text-decoration: underline;
+}
+.footer-bottom {
+    border-top: 1px solid var(--primary-70); /* Subtle separator */
+    padding-top: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    text-align: center;
+}
+.social-links {
+    display: flex;
+    gap: var(--space-md);
+}
+.social-link .material-symbols-rounded,
+.social-link svg { /* If using SVG icons */
+    font-size: 2.4rem; /* Size for social icons */
+    color: var(--neutral-90);
+    transition: color var(--transition-duration-short) ease, transform var(--transition-duration-short) ease;
+}
+.social-link:hover .material-symbols-rounded,
+.social-link:hover svg {
+    color: var(--yellow);
+    transform: scale(1.1);
+}
+.copyright {
+    font-size: var(--fs-small);
+    color: var(--neutral-80);
+}
+
+
+/* ==========================================================================
+   8. Responsive Styles
+   ========================================================================== */
+
+/* Medium screens (tablets) */
+@media (min-width: 768px) {
+    .container {
+        max-width: 72rem; /* Wider container for tablets */
+    }
+    .section {
+        padding-block: calc(var(--space-xxl) + 2rem);
+    }
+
+    /* Header & Navbar for Desktop */
+    .nav-toggle-btn {
+        display: none; /* Hide hamburger on larger screens */
+    }
+    .navbar { /* Convert to horizontal nav */
+        position: static; /* Reset mobile positioning */
+        visibility: visible;
+        opacity: 1;
+        transform: none;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        min-width: auto;
+        display: flex; /* Main axis horizontal */
+        align-items: center;
+        gap: var(--space-sm); /* Gap between nav sections */
+    }
+    .navbar-list {
+        display: flex; /* Horizontal list items */
+        gap: var(--space-sm);
+    }
+    .navbar-link, .navbar .btn-link {
+        padding: var(--space-sm) var(--space-md);
+        color: var(--clr-text-on-dark-bg); /* Assuming header is dark when sticky */
+        /* Adjust color if header is transparent and not sticky */
+    }
+    .header:not(.active) .navbar-link,
+    .header:not(.active) .navbar .btn-link {
+        color: var(--clr-text-headings); /* Or --white if on dark hero */
+    }
+    .navbar-link:hover,
+    .navbar-link:focus-visible,
+    .navbar .btn-link:hover,
+    .navbar .btn-link:focus-visible,
+    .navbar-link[aria-current="page"] {
+        background-color: rgba(var(--white_rgb, 255, 255, 255), 0.1); /* Subtle hover on dark header */
+        color: var(--white);
+    }
+    .navbar .btn-link { /* Login link styling for desktop */
+        border-top: none;
+        margin-top: 0;
+        margin-left: var(--space-md); /* Space before auth buttons */
+    }
+    .navbar .btn { /* Get Started button styling for desktop */
+        min-width: auto;
+        margin-top: 0;
+        margin-left: var(--space-xs);
+    }
+    .navbar-wrapper { /* Group for login/get started if needed */
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        margin-left: var(--space-lg); /* Space after main nav items */
+    }
+
+
+    /* Hero Section adjustments for Tablet */
+    .hero {
+        text-align: left; /* Align text to left */
+        padding-block: calc(var(--space-xxl) + 8rem) var(--space-xxl);
+    }
+    .hero .container {
+        display: grid;
+        grid-template-columns: 1fr; /* Default single column */
+        align-items: center;
+        gap: var(--space-xl);
+    }
+    .hero-content {
+        grid-row: 1; /* Ensure content is first on smaller tablets */
+    }
+    .hero-title, .hero-text {
+        margin-inline: 0; /* Remove auto margins for left alignment */
+    }
+    /* Search Bar horizontal layout */
+    .search-bar {
+        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+        gap: var(--space-md);
+    }
+    .search-item .label {
+        padding-left: 0; /* No need for indent if fields are full width */
+    }
+    .search-btn {
+        /* Let it take its natural column span, or be more specific: */
+        /* grid-column: 1 / -1; /* Full width on smaller grids */
+        /* Or if it's the last item, it might fit nicely */
+    }
+
+    /* Footer layout for tablet */
+    .footer-top {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .footer-brand {
+        align-items: flex-start; /* Align logo/tagline left */
+    }
+    .footer-nav {
+        justify-content: flex-end; /* Align nav columns to the right */
+        gap: var(--space-xl) var(--space-xxl);
+    }
+    .footer-nav-col {
+        text-align: left;
+    }
+    .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 114rem; /* Wider container for desktops */
+    }
+    :root { /* Increase base font size slightly on large screens */
+        /* --fs-base: 65%; */ /* Optional */
+    }
+
+    /* Hero section with image */
+    .hero .container {
+        grid-template-columns: minmax(auto, 55ch) 1fr; /* Text content, then image */
+    }
+    .hero-banner {
+        display: block; /* Show hero image */
+        max-width: 100%;
+        object-fit: contain; /* Or cover */
+        border-radius: var(--radius-large);
+        /* Add any specific styling for the banner image itself */
+    }
+    .search-bar {
+         grid-template-columns: 1fr 1fr 1fr auto; /* Example: Want | Type | Location | Btn */
+    }
+    .search-btn {
+        grid-column: auto; /* Reset from tablet if it was full width */
+    }
+
+    .about-list {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for about list */
+        gap: var(--space-lg);
+    }
+    .about-section .about-content {
+        max-width: 90ch;
+    }
+
+}
+
+/* Extra large screens (if needed) */
+@media (min-width: 1280px) {
+    .container {
+        max-width: 120rem;
+    }
+}
+
+/* Print styles (basic) */
+@media print {
+    body {
+        background-color: var(--white);
+        color: var(--black);
+    }
+    .header, .footer, .nav-toggle-btn, .search-bar, .btn {
+        display: none !important; /* Hide non-essential elements for printing */
+    }
+    a {
+        color: var(--black);
+        text-decoration: underline;
+    }
+    .card {
+        box-shadow: none;
+        border: 1px solid var(--neutral-90);
+        page-break-inside: avoid;
+    }
 }

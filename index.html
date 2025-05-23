@@ -8,6 +8,26 @@
     <meta name="keywords" content="real estate, property search, home finder, real estate listings, buy, sell, rent">
     <meta name="author" content="Lalit Madan">
 
+    <!-- Favicon - Replace with your actual favicon files -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.yourwebsite.com/"> <!-- Replace with your actual URL -->
+    <meta property="og:title" content="RealEstate Search | Find Your Dream Home">
+    <meta property="og:description" content="Find your perfect property with RealEstate Search. Browse listings for homes, apartments, villas, and more.">
+    <meta property="og:image" content="https://www.yourwebsite.com/assets/images/og-image.jpg"> <!-- Replace with an attractive share image -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.yourwebsite.com/"> <!-- Replace with your actual URL -->
+    <meta property="twitter:title" content="RealEstate Search | Find Your Dream Home">
+    <meta property="twitter:description" content="Find your perfect property with RealEstate Search. Browse listings for homes, apartments, villas, and more.">
+    <meta property="twitter:image" content="https://www.yourwebsite.com/assets/images/twitter-card-image.jpg"> <!-- Replace with an attractive share image -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
@@ -19,50 +39,53 @@
 <body>
     <header class="header" data-header>
         <div class="container">
-            <a href="#" class="logo" aria-label="RealEstate Search Home">
-                <img src="./assets/images/logo.png" width="190" height="28" alt="RealEstate Search Logo">
+            <a href="/" class="logo" aria-label="RealEstate Search Homepage">
+                <img src="./assets/images/logo.png" width="190" height="28" alt="RealEstate Search">
             </a>
-            <nav class="navbar" data-navbar aria-label="Main Navigation">
-                <ul class="navbar-list">
-                    <li><a href="#" class="navbar-link label-medium" aria-current="page">Home</a></li>
-                    <li><a href="#" class="navbar-link">Rent</a></li>
-                    <li><a href="#" class="navbar-link">Sell</a></li>
-                    <li><a href="#" class="navbar-link">Buy</a></li>
-                    <li><a href="#" class="navbar-link">About</a></li>
+            <nav class="navbar" data-navbar id="main-navigation" aria-label="Main Navigation">
+                <ul class="navbar-list" role="menubar">
+                    <li role="none"><a href="/" class="navbar-link label-medium" aria-current="page" role="menuitem">Home</a></li>
+                    <li role="none"><a href="/rent" class="navbar-link label-medium" role="menuitem">Rent</a></li>
+                    <li role="none"><a href="/sell" class="navbar-link label-medium" role="menuitem">Sell</a></li>
+                    <li role="none"><a href="/buy" class="navbar-link label-medium" role="menuitem">Buy</a></li>
+                    <li role="none"><a href="/about" class="navbar-link label-medium" role="menuitem">About</a></li>
                 </ul>
                 <div class="navbar-wrapper">
-                    <a href="#" class="btn-link label-medium">Login</a>
-                    <a href="#" class="btn btn-fill label-medium">Get Started</a>
+                    <a href="/login" class="btn-link label-medium">Login</a>
+                    <a href="/register" class="btn btn-fill label-medium">Get Started</a>
                 </div>
             </nav>
-            <button class="nav-toggle-btn icon-btn" aria-label="Toggle navigation" data-nav-toggler>
+            <button class="nav-toggle-btn icon-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-navigation" data-nav-toggler>
                 <span class="material-symbols-rounded open" aria-hidden="true">menu</span>
                 <span class="material-symbols-rounded close" aria-hidden="true">close</span>
             </button>
         </div>
     </header>
+
     <main>
-        <article>
-            <section class="hero">
-                <div class="container hero-container">
-                    <div class="hero-content">
-                        <h1 class="headline-large hero-title">Find a place where you can be yourself.</h1>
-                        <p class="body-large hero-text">
-                            Searching for a place to call home? Explore our listings and discover properties that match your lifestyle and needs.
-                        </p>
-                        <form action="./" method="get" class="search-bar" aria-label="Property Search">
-                            <label class="search-item">
-                                <span class="label-medium label">Want to</span>
-                                <select name="want-to" class="search-item-field body-medium" aria-label="Transaction Type">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1 class="headline-large hero-title" id="hero-title">Find a place where you can be yourself.</h1>
+                    <p class="body-large hero-text">
+                        Searching for a place to call home? Explore our listings and discover properties that match your lifestyle and needs.
+                    </p>
+                    <form action="/search-results" method="get" class="search-bar" aria-label="Property Search">
+                        <div class="search-item">
+                            <label for="want-to-select" class="label-medium label">Want to</label>
+                            <div class="search-item-field-wrapper">
+                                <select name="transactionType" id="want-to-select" class="search-item-field body-medium" aria-label="Select transaction type: Buy, Sell, or Rent">
                                     <option value="buy" selected>Buy</option>
                                     <option value="sell">Sell</option>
                                     <option value="rent">Rent</option>
                                 </select>
                                 <span class="material-symbols-rounded" aria-hidden="true">real_estate_agent</span>
-                            </label>
-                            <label class="search-item">
-                                <span class="label-medium label">Property type</span>
-                                <select name="property-type" class="search-item-field body-medium" aria-label="Property Type">
+                            </div>
+                        </div>
+                        <div class="search-item">
+                            <label for="property-type-select" class="label-medium label">Property type</label>
+                            <div class="search-item-field-wrapper">
+                                <select name="propertyType" id="property-type-select" class="search-item-field body-medium" aria-label="Select property type">
                                     <option value="any" selected>Any</option>
                                     <option value="houses">Houses</option>
                                     <option value="apartments">Apartments</option>
@@ -72,25 +95,170 @@
                                     <option value="loft">Loft</option>
                                 </select>
                                 <span class="material-symbols-rounded" aria-hidden="true">gite</span>
-                            </label>
-                            <label class="search-item">
-                                <span class="label-medium label">Location</span>
-                                <input type="text" name="location" placeholder="Street, City, Zip..." class="search-item-field body-medium" aria-label="Location">
+                            </div>
+                        </div>
+                        <div class="search-item">
+                            <label for="location-input" class="label-medium label">Location</label>
+                            <div class="search-item-field-wrapper">
+                                <input type="text" name="location" id="location-input" placeholder="Street, City, Zip..." class="search-item-field body-medium" aria-label="Enter location: Street, City, or Zip Code">
                                 <span class="material-symbols-rounded" aria-hidden="true">location_on</span>
-                            </label>
-                            <button type="submit" class="search-btn">
-                                <span class="material-symbols-rounded" aria-hidden="true">search</span>
-                                <span class="label-medium">Search</span>
-                            </button>
-                        </form>
-                    </div>
-                    <div class="hero-images">
-                        <img src="./assets/images/hero.png" width="816" height="659" role="presentation" alt="" class="hero-banner">
-                        <img src="./assets/images/bg-pattern.png" width="1240" height="840" role="presentation" alt="" class="bg-pattern">
-                    </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="search-btn">
+                            <span class="material-symbols-rounded" aria-hidden="true">search</span>
+                            <span class="label-medium">Search</span>
+                        </button>
+                    </form>
                 </div>
-            </section>
-        </article>
+                <div class="hero-images">
+                    <!-- For decorative images, alt="" is fine. If they convey meaning, provide descriptive alt text. -->
+                    <img src="./assets/images/hero.png" width="816" height="659" alt="Modern homes and cityscape" class="hero-banner">
+                    <img src="./assets/images/bg-pattern.png" width="1240" height="840" role="presentation" alt="" class="bg-pattern">
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-listings" aria-labelledby="featured-properties-title">
+            <div class="container">
+                <h2 class="headline-medium" id="featured-properties-title">Featured Properties</h2>
+                <div class="listing-grid">
+                    <!-- Example Property Card - Repeat for each property -->
+                    <article class="property-card" aria-labelledby="property-title-1">
+                        <figure class="property-figure">
+                            <a href="/property/modern-apartment-nyc" aria-label="View details for Modern Apartment">
+                                <img src="./assets/images/property1.jpg" alt="Exterior view of a modern apartment building in New York." class="property-img" width="350" height="220" loading="lazy">
+                            </a>
+                        </figure>
+                        <div class="property-info">
+                            <h3 class="property-title" id="property-title-1">
+                                <a href="/property/modern-apartment-nyc">Modern Apartment</a>
+                            </h3>
+                            <p class="property-location">
+                                <span class="material-symbols-rounded" aria-hidden="true">location_on</span> New York, NY
+                            </p>
+                            <p class="property-price">$1,200,000</p>
+                            <a href="/property/modern-apartment-nyc" class="btn btn-outline">View Details</a>
+                        </div>
+                    </article>
+
+                    <article class="property-card" aria-labelledby="property-title-2">
+                        <figure class="property-figure">
+                             <a href="/property/family-house-la" aria-label="View details for Family House">
+                                <img src="./assets/images/property2.jpg" alt="Front view of a spacious family house with a garden." class="property-img" width="350" height="220" loading="lazy">
+                            </a>
+                        </figure>
+                        <div class="property-info">
+                            <h3 class="property-title" id="property-title-2">
+                                <a href="/property/family-house-la">Family House</a>
+                            </h3>
+                            <p class="property-location">
+                                <span class="material-symbols-rounded" aria-hidden="true">location_on</span> Los Angeles, CA
+                            </p>
+                            <p class="property-price">$950,000</p>
+                            <a href="/property/family-house-la" class="btn btn-outline">View Details</a>
+                        </div>
+                    </article>
+
+                    <article class="property-card" aria-labelledby="property-title-3">
+                        <figure class="property-figure">
+                            <a href="/property/luxury-villa-miami" aria-label="View details for Luxury Villa">
+                                <img src="./assets/images/property3.jpg" alt="Luxury villa with a swimming pool in Miami." class="property-img" width="350" height="220" loading="lazy">
+                            </a>
+                        </figure>
+                        <div class="property-info">
+                            <h3 class="property-title" id="property-title-3">
+                                <a href="/property/luxury-villa-miami">Luxury Villa</a>
+                            </h3>
+                            <p class="property-location">
+                                <span class="material-symbols-rounded" aria-hidden="true">location_on</span> Miami, FL
+                            </p>
+                            <p class="property-price">$2,500,000</p>
+                            <a href="/property/luxury-villa-miami" class="btn btn-outline">View Details</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="view-all-properties-wrapper" style="text-align: center; margin-top: 2rem;">
+                    <a href="/listings" class="btn btn-fill">View All Properties</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section" aria-labelledby="why-choose-us-title">
+            <div class="container">
+                <div class="about-content">
+                    <h2 class="headline-medium" id="why-choose-us-title">Why Choose RealEstate Search?</h2>
+                    <ul class="about-list">
+                        <li><span class="material-symbols-rounded" aria-hidden="true">verified</span> Trusted Listings</li>
+                        <li><span class="material-symbols-rounded" aria-hidden="true">support_agent</span> Expert Support</li>
+                        <li><span class="material-symbols-rounded" aria-hidden="true">home</span> Wide Range of Properties</li>
+                        <li><span class="material-symbols-rounded" aria-hidden="true">star</span> Top Rated Agents</li>
+                    </ul>
+                    <a href="/about-us" class="btn btn-fill">Learn More About Us</a>
+                </div>
+                <!-- Optional: Add an image to the about section -->
+                <!-- <div class="about-image">
+                    <img src="./assets/images/about-image.jpg" alt="Team of real estate agents collaborating." loading="lazy">
+                </div> -->
+            </div>
+        </section>
+        <!-- Removed <article> wrapper from main as sections are direct children of main typically -->
     </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="/" class="footer-logo-link" aria-label="RealEstate Search Homepage">
+                        <img src="./assets/images/logo.png" width="150" height="22" alt="RealEstate Search">
+                    </a>
+                    <p class="footer-tagline body-small">Your journey to the perfect home starts here.</p>
+                </div>
+                <nav class="footer-nav" aria-label="Footer Navigation">
+                    <div class="footer-nav-col">
+                        <h3 class="label-medium footer-nav-title">Quick Links</h3>
+                        <ul>
+                            <li><a href="/" class="footer-link">Home</a></li>
+                            <li><a href="/rent" class="footer-link">Rent</a></li>
+                            <li><a href="/sell" class="footer-link">Sell</a></li>
+                            <li><a href="/buy" class="footer-link">Buy</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-col">
+                        <h3 class="label-medium footer-nav-title">Company</h3>
+                        <ul>
+                            <li><a href="/about-us" class="footer-link">About Us</a></li>
+                            <li><a href="/contact" class="footer-link">Contact</a></li>
+                            <li><a href="/careers" class="footer-link">Careers</a></li>
+                            <li><a href="/blog" class="footer-link">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-col">
+                        <h3 class="label-medium footer-nav-title">Legal</h3>
+                        <ul>
+                            <li><a href="/privacy-policy" class="footer-link">Privacy Policy</a></li>
+                            <li><a href="/terms-of-service" class="footer-link">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <div class="social-links" aria-label="Social media links">
+                    <a href="https://facebook.com/yourpage" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                        <span class="material-symbols-rounded" aria-hidden="true">facebook</span> <!-- Or use actual SVG icons -->
+                    </a>
+                    <a href="https://twitter.com/yourpage" class="social-link" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                        <span class="material-symbols-rounded" aria-hidden="true">flutter_dash</span> <!-- Placeholder for Twitter icon -->
+                    </a>
+                    <a href="https://instagram.com/yourpage" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                        <span class="material-symbols-rounded" aria-hidden="true">photo_camera</span> <!-- Placeholder for Instagram icon -->
+                    </a>
+                </div>
+                <p class="copyright">© <span id="current-year"></span> RealEstate Search. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
