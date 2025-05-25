@@ -9,7 +9,16 @@ const $navToggler = $("[data-nav-toggler]");
 
 if ($navbar && $navToggler) {
     $navToggler.addEventListener("click", () => {
-        $navbar.classList.toggle("active");
+        const isActive = $navbar.classList.toggle("active");
+        $navToggler.setAttribute("aria-expanded", isActive);
+    });
+
+    // Close navbar when a link is clicked (for mobile UX)
+    $navbar.addEventListener("click", e => {
+        if (e.target.matches(".navbar-link")) {
+            $navbar.classList.remove("active");
+            $navToggler.setAttribute("aria-expanded", "false");
+        }
     });
 } else {
     console.warn("Navbar or nav toggler not found.");

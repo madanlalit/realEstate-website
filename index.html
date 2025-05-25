@@ -8,7 +8,6 @@
     <meta name="keywords" content="real estate, property search, home finder, real estate listings, buy, sell, rent">
     <meta name="author" content="Lalit Madan">
 
-    <!-- Favicon - Replace with your actual favicon files -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -16,23 +15,22 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.yourwebsite.com/"> <!-- Replace with your actual URL -->
+    <meta property="og:url" content="https://www.yourwebsite.com/">
     <meta property="og:title" content="RealEstate Search | Find Your Dream Home">
     <meta property="og:description" content="Find your perfect property with RealEstate Search. Browse listings for homes, apartments, villas, and more.">
-    <meta property="og:image" content="https://www.yourwebsite.com/assets/images/og-image.jpg"> <!-- Replace with an attractive share image -->
+    <meta property="og:image" content="https://www.yourwebsite.com/assets/images/og-image.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.yourwebsite.com/"> <!-- Replace with your actual URL -->
+    <meta property="twitter:url" content="https://www.yourwebsite.com/">
     <meta property="twitter:title" content="RealEstate Search | Find Your Dream Home">
     <meta property="twitter:description" content="Find your perfect property with RealEstate Search. Browse listings for homes, apartments, villas, and more.">
-    <meta property="twitter:image" content="https://www.yourwebsite.com/assets/images/twitter-card-image.jpg"> <!-- Replace with an attractive share image -->
+    <meta property="twitter:image" content="https://www.yourwebsite.com/assets/images/twitter-card-image.jpg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./assets/js/script.js" defer></script>
 </head>
@@ -70,7 +68,7 @@
                     <p class="body-large hero-text">
                         Searching for a place to call home? Explore our listings and discover properties that match your lifestyle and needs.
                     </p>
-                    <form action="/search-results" method="get" class="search-bar" aria-label="Property Search">
+                    <form action="/search-results" method="get" class="search-bar" aria-label="Property Search" autocomplete="off">
                         <div class="search-item">
                             <label for="want-to-select" class="label-medium label">Want to</label>
                             <div class="search-item-field-wrapper">
@@ -100,7 +98,7 @@
                         <div class="search-item">
                             <label for="location-input" class="label-medium label">Location</label>
                             <div class="search-item-field-wrapper">
-                                <input type="text" name="location" id="location-input" placeholder="Street, City, Zip..." class="search-item-field body-medium" aria-label="Enter location: Street, City, or Zip Code">
+                                <input type="text" name="location" id="location-input" placeholder="Street, City, Zip..." class="search-item-field body-medium" aria-label="Enter location: Street, City, or Zip Code" required>
                                 <span class="material-symbols-rounded" aria-hidden="true">location_on</span>
                             </div>
                         </div>
@@ -111,9 +109,8 @@
                     </form>
                 </div>
                 <div class="hero-images">
-                    <!-- For decorative images, alt="" is fine. If they convey meaning, provide descriptive alt text. -->
-                    <img src="./assets/images/hero.png" width="816" height="659" alt="Modern homes and cityscape" class="hero-banner">
-                    <img src="./assets/images/bg-pattern.png" width="1240" height="840" role="presentation" alt="" class="bg-pattern">
+                    <img src="./assets/images/hero.png" width="816" height="659" alt="Modern homes and cityscape" class="hero-banner" loading="eager">
+                    <img src="./assets/images/bg-pattern.png" width="1240" height="840" role="presentation" alt="" class="bg-pattern" loading="lazy">
                 </div>
             </div>
         </section>
@@ -122,7 +119,6 @@
             <div class="container">
                 <h2 class="headline-medium" id="featured-properties-title">Featured Properties</h2>
                 <div class="listing-grid">
-                    <!-- Example Property Card - Repeat for each property -->
                     <article class="property-card" aria-labelledby="property-title-1">
                         <figure class="property-figure">
                             <a href="/property/modern-apartment-nyc" aria-label="View details for Modern Apartment">
@@ -201,7 +197,6 @@
                 </div> -->
             </div>
         </section>
-        <!-- Removed <article> wrapper from main as sections are direct children of main typically -->
     </main>
 
     <footer class="footer">
@@ -244,13 +239,13 @@
             <div class="footer-bottom">
                 <div class="social-links" aria-label="Social media links">
                     <a href="https://facebook.com/yourpage" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-                        <span class="material-symbols-rounded" aria-hidden="true">facebook</span> <!-- Or use actual SVG icons -->
+                        <span class="material-symbols-rounded" aria-hidden="true">facebook</span>
                     </a>
                     <a href="https://twitter.com/yourpage" class="social-link" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
-                        <span class="material-symbols-rounded" aria-hidden="true">flutter_dash</span> <!-- Placeholder for Twitter icon -->
+                        <span class="material-symbols-rounded" aria-hidden="true">flutter_dash</span>
                     </a>
                     <a href="https://instagram.com/yourpage" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-                        <span class="material-symbols-rounded" aria-hidden="true">photo_camera</span> <!-- Placeholder for Instagram icon -->
+                        <span class="material-symbols-rounded" aria-hidden="true">photo_camera</span>
                     </a>
                 </div>
                 <p class="copyright">© <span id="current-year"></span> RealEstate Search. All rights reserved.</p>
