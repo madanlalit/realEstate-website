@@ -29,6 +29,12 @@
     --error-100: #FF2134;
     --success-100: #28a745; /* Example success color */
 
+    /* RGB versions for rgba() */
+    --primary-100_rgb: 33, 121, 255;
+    --white_rgb: 255, 255, 255;
+    --black_rgb: 0, 0, 0;
+
+
     /* Gradients */
     --gradient-hero: linear-gradient(to bottom, var(--primary-40), #051a33); /* Renamed for clarity */
 
@@ -125,8 +131,13 @@
 @media (prefers-color-scheme: dark) {
     :root {
         /* Base Color Overrides for Dark Mode */
-        --white: #0C0C0D;
-        --black: #ffffff;
+        --white: #0C0C0D; /* This is now a dark color */
+        --black: #ffffff; /* This is now a light color */
+
+        /* Update RGB vars for dark mode if they are based on --white/--black semantic names */
+        --white_rgb: 12, 12, 13; /* Corresponds to #0C0C0D */
+        --black_rgb: 255, 255, 255; /* Corresponds to #ffffff */
+
         --yellow: #F8C548; /* Slightly adjusted yellow for dark bg if needed */
 
         --primary-100: #3B8AFF; /* Ensure sufficient contrast for primary in dark mode */
@@ -150,12 +161,13 @@
         --clr-text-body: var(--neutral-20);
         --clr-text-headings: var(--neutral-10);
         --clr-text-subtle: var(--neutral-40);
-        --clr-text-on-primary: var(--black); /* If primary-100 is light enough */
+        /* --clr-text-on-primary: var(--black); If primary-100 is light enough, black is now #fff */
+        --clr-text-on-primary: var(--neutral-100); /* Text on primary button (dark text on light blue) */
         --clr-text-on-dark-bg: var(--neutral-10);
 
         --clr-bg-page: var(--neutral-100); /* Darkest as page bg */
         --clr-bg-card: var(--neutral-98);  /* Slightly lighter for cards */
-        /* --clr-bg-interactive: var(--primary-80); /* Example: Darker primary for BG in dark */
+        /* --clr-bg-interactive: var(--primary-80); Example: Darker primary for BG in dark */
 
         --clr-border-subtle: var(--neutral-80);
         --clr-border-focus-ring: var(--primary-90);
@@ -163,8 +175,11 @@
         --clr-icon-default: var(--neutral-30);
 
         /* Shadows for dark mode might need to be lighter or use different colors */
-        --shadow-1: 0 2px 4px rgba(0,0,0,0.2);
-        --shadow-2: 0 4px 8px rgba(0,0,0,0.25);
+        --shadow-1: 0 2px 4px rgba(var(--black_rgb),0.2); /* Use black_rgb (which is white in dark mode) for a subtle glow or a dark color for shadow */
+        --shadow-1: 0 2px 4px rgba(0,0,0,0.4); /* Actual dark shadow for dark mode */
+        --shadow-2: 0 4px 8px rgba(0,0,0,0.45);
+        --shadow-3: 0 6px 16px rgba(0,0,0,0.5);
+        --shadow-4: 0 10px 30px rgba(0,0,0,0.5);
     }
 }
 
@@ -236,22 +251,18 @@ select:focus-visible,
 textarea:focus-visible {
     outline: 2px solid var(--clr-border-focus-ring);
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(var(--primary-100_rgb, 33, 121, 255), 0.2); /* Optional softer glow */
+    box-shadow: 0 0 0 4px rgba(var(--primary-100_rgb), 0.2);
 }
-/* Placeholder for --primary-100_rgb: create CSS vars for R,G,B values of primary if needed for rgba() */
-/* Example: --primary-100_rgb: 33, 121, 255; */
-
 
 select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    /* Custom arrow will be needed for selects */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23616366'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right var(--space-sm) center;
     background-size: 1.8em;
-    padding-right: calc(var(--space-sm) + 1.8em); /* Space for arrow */
+    padding-right: calc(var(--space-sm) + 1.8em + var(--space-xs)); /* Space for arrow, added xs for safety */
 }
 
 address { font-style: normal; }
@@ -385,7 +396,6 @@ address { font-style: normal; }
 .btn:focus-visible {
     outline: 2px solid var(--clr-border-focus-ring);
     outline-offset: 3px;
-    /* box-shadow: 0 0 0 3px var(--clr-border-focus-ring); */ /* Alternative focus */
 }
 
 .btn-fill {
@@ -430,7 +440,7 @@ address { font-style: normal; }
 }
 .btn-link:hover,
 .btn-link:focus-visible {
-    background-color: rgba(var(--primary-100_rgb, 33, 121, 255), 0.1); /* Subtle hover */
+    background-color: rgba(var(--primary-100_rgb), 0.1); /* Subtle hover */
     color: var(--primary-80);
 }
 
@@ -543,12 +553,7 @@ address { font-style: normal; }
     height: 7.2rem;
     background: var(--primary-40); /* Or a semi-transparent dark color */
     box-shadow: var(--shadow-3);
-    /* animation: slide_in 0.5s ease forwards; /* Consider if still needed */
 }
-/* @keyframes slide_in {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(0); }
-} */
 .header .container {
     position: relative;
     display: flex;
@@ -594,7 +599,7 @@ address { font-style: normal; }
 .navbar-list {
     display: contents; /* Allow li to be direct grid children */
 }
-.navbar-link, .navbar .btn-link { /* .navbar .btn-link for login inside mobile nav */
+.navbar-link, .navbar .btn-link {
     color: var(--clr-text-subtle);
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-small);
@@ -603,7 +608,7 @@ address { font-style: normal; }
     display: block; /* Make links full width */
     text-align: left;
 }
-.navbar .btn-link { /* Specific styling for login link if it's special */
+.navbar .btn-link {
     border-top: 1px solid var(--clr-border-subtle);
     margin-top: var(--space-xs);
     padding-top: var(--space-sm);
@@ -614,17 +619,16 @@ address { font-style: normal; }
 .navbar .btn-link:focus-visible,
 .navbar-link[aria-current="page"] {
     color: var(--clr-text-link);
-    background-color: rgba(var(--primary-100_rgb, 33, 121, 255), 0.05);
+    background-color: rgba(var(--primary-100_rgb), 0.05);
 }
-.navbar .btn { /* "Get Started" button in mobile nav */
+.navbar .btn {
     min-width: 100%;
     margin-top: var(--space-xs);
 }
 
 /* Nav Toggle Button (Hamburger) */
 .nav-toggle-btn {
-    display: grid; /* For icon-btn base styles */
-    /* display: none; /* Hide on larger screens if nav changes */
+    display: grid;
 }
 .nav-toggle-btn .close,
 .nav-toggle-btn.active .open { display: none; }
@@ -644,9 +648,23 @@ address { font-style: normal; }
     text-align: center; /* Mobile default */
 }
 .hero-title {
-    color: var(--white); /* Direct white from palette for hero titles */
+    /* In :root, --white is #fff in light, #0C0C0D in dark. We want bright white here always. */
+    color: #FFFFFF; /* Explicit white for hero title on dark background */
     margin-bottom: var(--space-md);
 }
+/* Ensure text on hero is light even in dark mode where --clr-text-on-dark-bg might become too dark if based on --neutral-90 */
+.hero, .hero-text {
+    color: var(--neutral-95); /* A very light grey, good on dark hero bg */
+}
+@media (prefers-color-scheme: dark) {
+    .hero-title {
+      color: #E9ECF2; /* --neutral-10 */
+    }
+    .hero, .hero-text {
+        color: var(--neutral-30); /* Lighter text for dark mode on dark hero */
+    }
+}
+
 .hero-text {
     font-size: var(--fs-body-large);
     margin-block: var(--space-md) var(--space-xl);
@@ -656,7 +674,7 @@ address { font-style: normal; }
 }
 .hero-banner { display: none; } /* Hidden on mobile */
 
-.hero .bg-pattern { /* Decorative background pattern */
+.hero .bg-pattern {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -665,13 +683,13 @@ address { font-style: normal; }
     min-height: 100%;
     object-fit: cover;
     pointer-events: none;
-    z-index: -1; /* Behind content but above hero background */
-    opacity: 0.1; /* Subtle pattern */
+    z-index: -1;
+    opacity: 0.05; /* Adjusted opacity for pattern */
 }
 
 /* Search Bar (in Hero) */
 .search-bar {
-    background: var(--clr-bg-card); /* Use card background for consistency */
+    background: var(--clr-bg-card);
     display: grid;
     padding: var(--space-sm);
     gap: var(--space-sm);
@@ -681,59 +699,70 @@ address { font-style: normal; }
 }
 .search-item {
     position: relative;
-    color: var(--clr-text-subtle);
+    color: var(--clr-text-subtle); /* Original: --clr-text-subtle, might be too light on card bg */
+    text-align: left; /* Ensure labels are left-aligned */
 }
-/* Wrapper for input/select field and its icon */
-.search-item-field-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-.search-item .label { /* Label above the input */
+.search-item .label {
     display: block;
     font-size: var(--fs-small);
     font-weight: var(--weight-semiBold);
-    color: var(--clr-text-headings);
+    color: var(--clr-text-headings); /* Label color */
     margin-bottom: var(--space-xs);
-    padding-left: var(--space-sm); /* Align with field padding */
+    padding-left: var(--space-sm);
 }
-.search-item .search-item-field { /* input or select */
-    height: 5.6rem; /* Adjusted height */
-    padding: var(--space-sm) var(--space-md);
-    padding-right: calc(var(--space-md) + 2em); /* Space for icon if select has custom, or for general icon */
+
+.search-item-field-wrapper {
+    position: relative; /* For absolute positioning of icon */
+}
+.search-item .search-field-icon { /* Icon inside the field (leading) */
+    position: absolute;
+    top: 50%;
+    left: var(--space-md);
+    transform: translateY(-50%);
+    color: var(--clr-icon-accent);
+    pointer-events: none;
+    font-size: 2rem;
+    z-index: 1;
+}
+.search-item .search-item-field {
+    height: 5.6rem;
+    padding: var(--space-sm) var(--space-md); /* Top/bottom, right padding */
+    /* Calculate left padding: initial indent + icon width + gap */
+    padding-left: calc(var(--space-md) + 2rem + var(--space-sm));
     border: 1px solid var(--clr-border-subtle);
     border-radius: var(--radius-medium);
-    background-color: var(--clr-bg-page); /* Slightly different from card bg */
+    background-color: var(--clr-bg-page);
     transition: border-color var(--transition-duration-short) ease,
                 background-color var(--transition-duration-short) ease;
     cursor: pointer; /* For selects */
+    color: var(--clr-text-body); /* Ensure text color is appropriate */
 }
+/* Select specific padding right for its own arrow is already handled by global select rule */
+
 .search-item .search-item-field:hover,
 .search-item .search-item-field:focus-visible {
     border-color: var(--clr-border-interactive);
-    background-color: var(--white); /* Lighten on focus/hover */
+    background-color: var(--white); /* Lighten on focus/hover - careful in dark mode */
+}
+@media (prefers-color-scheme: dark) {
+    .search-item .search-item-field:hover,
+    .search-item .search-item-field:focus-visible {
+        background-color: var(--neutral-95); /* Slightly lighter dark bg */
+    }
 }
 .search-item .search-item-field::placeholder {
     color: var(--clr-text-subtle);
 }
-.search-item .search-item-field-wrapper .material-symbols-rounded { /* Icon inside the field wrapper */
-    position: absolute;
-    top: 50%;
-    right: var(--space-md);
-    transform: translateY(-50%);
-    color: var(--clr-icon-accent);
-    pointer-events: none; /* So it doesn't interfere with input clicks */
-    font-size: 2rem;
-}
-.search-btn { /* Specific search button in the bar */
+
+.search-btn {
     background: var(--clr-bg-interactive);
     color: var(--clr-text-on-primary);
-    height: 5.6rem; /* Match field height */
+    height: 5.6rem;
     padding-inline: var(--space-lg);
     gap: var(--space-sm);
     border-radius: var(--radius-medium);
     transition: background-color var(--transition-duration-short) ease;
-    font-size: var(--fs-body-medium); /* Slightly larger text for main CTA */
+    font-size: var(--fs-body-medium);
     font-weight: var(--weight-bold);
 }
 .search-btn:hover,
@@ -783,7 +812,7 @@ address { font-style: normal; }
     display: grid;
     gap: var(--space-md);
     margin-block: var(--space-lg) var(--space-xl);
-    text-align: left;
+    text-align: left; /* List items text alignment */
 }
 .about-list li {
     display: flex;
@@ -795,7 +824,7 @@ address { font-style: normal; }
 .about-list .material-symbols-rounded {
     color: var(--clr-icon-accent);
     font-size: 2.4rem;
-    background-color: rgba(var(--primary-100_rgb, 33, 121, 255), 0.1);
+    background-color: rgba(var(--primary-100_rgb), 0.1);
     padding: var(--space-xs);
     border-radius: var(--radius-circle);
 }
@@ -805,14 +834,12 @@ address { font-style: normal; }
 
 /* Footer */
 .footer {
-    background: var(--primary-40); /* Using a primary shade for footer bg */
-    color: var(--neutral-90); /* Lighter text on dark footer */
+    background: var(--primary-40);
+    color: var(--neutral-90);
     padding-block: var(--space-xl) var(--space-lg);
     font-size: var(--fs-label-medium);
 }
-.footer .container {
-    /* Default is mobile: single column, items centered */
-}
+
 .footer-top {
     display: flex;
     flex-direction: column;
@@ -822,19 +849,19 @@ address { font-style: normal; }
     text-align: center;
 }
 .footer-brand .footer-logo-link img {
-    height: 2.2rem; /* Footer logo size */
+    height: 2.2rem;
     margin-bottom: var(--space-xs);
 }
 .footer-tagline {
     font-size: var(--fs-small);
-    color: var(--neutral-80); /* Subtler color for tagline */
+    color: var(--neutral-80);
     max-width: 40ch;
 }
 .footer-nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: var(--space-lg) var(--space-xl); /* Row and column gap */
+    gap: var(--space-lg) var(--space-xl);
     width: 100%;
 }
 .footer-nav-col {
@@ -842,9 +869,15 @@ address { font-style: normal; }
 }
 .footer-nav-title {
     font-weight: var(--weight-bold);
-    color: var(--white); /* Direct white for titles */
+    /* color: var(--white); Explicit white needed because --white changes in dark mode */
+    color: #FFFFFF;
     margin-bottom: var(--space-sm);
     text-transform: uppercase;
+}
+@media (prefers-color-scheme: dark) {
+    .footer-nav-title {
+        color: var(--neutral-10); /* Lighter color for titles in dark footer */
+    }
 }
 .footer-nav ul {
     display: grid;
@@ -856,11 +889,11 @@ address { font-style: normal; }
 }
 .footer-link:hover,
 .footer-link:focus-visible {
-    color: var(--yellow); /* Accent hover for footer links */
+    color: var(--yellow);
     text-decoration: underline;
 }
 .footer-bottom {
-    border-top: 1px solid var(--primary-70); /* Subtle separator */
+    border-top: 1px solid var(--primary-70);
     padding-top: var(--space-lg);
     display: flex;
     flex-direction: column;
@@ -873,8 +906,8 @@ address { font-style: normal; }
     gap: var(--space-md);
 }
 .social-link .material-symbols-rounded,
-.social-link svg { /* If using SVG icons */
-    font-size: 2.4rem; /* Size for social icons */
+.social-link svg {
+    font-size: 2.4rem;
     color: var(--neutral-90);
     transition: color var(--transition-duration-short) ease, transform var(--transition-duration-short) ease;
 }
@@ -896,7 +929,7 @@ address { font-style: normal; }
 /* Medium screens (tablets) */
 @media (min-width: 768px) {
     .container {
-        max-width: 72rem; /* Wider container for tablets */
+        max-width: 72rem;
     }
     .section {
         padding-block: calc(var(--space-xxl) + 2rem);
@@ -904,10 +937,10 @@ address { font-style: normal; }
 
     /* Header & Navbar for Desktop */
     .nav-toggle-btn {
-        display: none; /* Hide hamburger on larger screens */
+        display: none;
     }
-    .navbar { /* Convert to horizontal nav */
-        position: static; /* Reset mobile positioning */
+    .navbar {
+        position: static;
         visibility: visible;
         opacity: 1;
         transform: none;
@@ -915,65 +948,78 @@ address { font-style: normal; }
         box-shadow: none;
         padding: 0;
         min-width: auto;
-        display: flex; /* Main axis horizontal */
+        display: flex;
         align-items: center;
-        gap: var(--space-sm); /* Gap between nav sections */
+        gap: var(--space-sm);
     }
     .navbar-list {
-        display: flex; /* Horizontal list items */
+        display: flex;
         gap: var(--space-sm);
     }
     .navbar-link, .navbar .btn-link {
         padding: var(--space-sm) var(--space-md);
-        color: var(--clr-text-on-dark-bg); /* Assuming header is dark when sticky */
-        /* Adjust color if header is transparent and not sticky */
+        /* Text color on transparent header (not .active) depends on background. Hero is dark. */
+        color: var(--neutral-95); /* Light color for links on transparent header over dark hero */
     }
-    .header:not(.active) .navbar-link,
-    .header:not(.active) .navbar .btn-link {
-        color: var(--clr-text-headings); /* Or --white if on dark hero */
+    .header.active .navbar-link,
+    .header.active .navbar .btn-link {
+        color: var(--clr-text-on-dark-bg); /* When header has .active (dark bg) */
     }
+
     .navbar-link:hover,
     .navbar-link:focus-visible,
     .navbar .btn-link:hover,
     .navbar .btn-link:focus-visible,
     .navbar-link[aria-current="page"] {
-        background-color: rgba(var(--white_rgb, 255, 255, 255), 0.1); /* Subtle hover on dark header */
-        color: var(--white);
+        /* Hover/focus color for links on header */
+        background-color: rgba(var(--white_rgb), 0.1); /* Subtle whiteish background */
+        color: #FFFFFF; /* Bright white text on hover */
     }
-    .navbar .btn-link { /* Login link styling for desktop */
+    /* Adjust hover for .active header state */
+    .header.active .navbar-link:hover,
+    .header.active .navbar-link:focus-visible,
+    .header.active .navbar .btn-link:hover,
+    .header.active .navbar .btn-link:focus-visible,
+    .header.active .navbar-link[aria-current="page"] {
+        background-color: rgba(var(--primary-100_rgb), 0.15);
+        color: var(--primary-100);
+    }
+
+
+    .navbar .btn-link {
         border-top: none;
         margin-top: 0;
-        margin-left: var(--space-md); /* Space before auth buttons */
+        margin-left: var(--space-md);
     }
-    .navbar .btn { /* Get Started button styling for desktop */
+    .navbar .btn {
         min-width: auto;
         margin-top: 0;
         margin-left: var(--space-xs);
     }
-    .navbar-wrapper { /* Group for login/get started if needed */
+    .navbar-wrapper {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
-        margin-left: var(--space-lg); /* Space after main nav items */
+        margin-left: var(--space-lg);
     }
 
 
     /* Hero Section adjustments for Tablet */
     .hero {
-        text-align: left; /* Align text to left */
+        text-align: left;
         padding-block: calc(var(--space-xxl) + 8rem) var(--space-xxl);
     }
     .hero .container {
         display: grid;
-        grid-template-columns: 1fr; /* Default single column */
+        grid-template-columns: 1fr;
         align-items: center;
         gap: var(--space-xl);
     }
     .hero-content {
-        grid-row: 1; /* Ensure content is first on smaller tablets */
+        grid-row: 1;
     }
     .hero-title, .hero-text {
-        margin-inline: 0; /* Remove auto margins for left alignment */
+        margin-inline: 0;
     }
     /* Search Bar horizontal layout */
     .search-bar {
@@ -981,13 +1027,9 @@ address { font-style: normal; }
         gap: var(--space-md);
     }
     .search-item .label {
-        padding-left: 0; /* No need for indent if fields are full width */
+        padding-left: 0;
     }
-    .search-btn {
-        /* Let it take its natural column span, or be more specific: */
-        /* grid-column: 1 / -1; /* Full width on smaller grids */
-        /* Or if it's the last item, it might fit nicely */
-    }
+
 
     /* Footer layout for tablet */
     .footer-top {
@@ -997,10 +1039,10 @@ address { font-style: normal; }
         text-align: left;
     }
     .footer-brand {
-        align-items: flex-start; /* Align logo/tagline left */
+        align-items: flex-start;
     }
     .footer-nav {
-        justify-content: flex-end; /* Align nav columns to the right */
+        justify-content: flex-end;
         gap: var(--space-xl) var(--space-xxl);
     }
     .footer-nav-col {
@@ -1015,10 +1057,7 @@ address { font-style: normal; }
 /* Large screens (desktops) */
 @media (min-width: 1024px) {
     .container {
-        max-width: 114rem; /* Wider container for desktops */
-    }
-    :root { /* Increase base font size slightly on large screens */
-        /* --fs-base: 65%; */ /* Optional */
+        max-width: 114rem;
     }
 
     /* Hero section with image */
@@ -1026,21 +1065,20 @@ address { font-style: normal; }
         grid-template-columns: minmax(auto, 55ch) 1fr; /* Text content, then image */
     }
     .hero-banner {
-        display: block; /* Show hero image */
+        display: block;
         max-width: 100%;
-        object-fit: contain; /* Or cover */
+        object-fit: contain;
         border-radius: var(--radius-large);
-        /* Add any specific styling for the banner image itself */
     }
     .search-bar {
-         grid-template-columns: 1fr 1fr 1fr auto; /* Example: Want | Type | Location | Btn */
+         grid-template-columns: repeat(3, 1fr) auto; /* Want | Type | Location | Btn */
     }
     .search-btn {
-        grid-column: auto; /* Reset from tablet if it was full width */
+        grid-column: auto;
     }
 
     .about-list {
-        grid-template-columns: repeat(2, 1fr); /* Two columns for about list */
+        grid-template-columns: repeat(2, 1fr);
         gap: var(--space-lg);
     }
     .about-section .about-content {
@@ -1062,8 +1100,8 @@ address { font-style: normal; }
         background-color: var(--white);
         color: var(--black);
     }
-    .header, .footer, .nav-toggle-btn, .search-bar, .btn {
-        display: none !important; /* Hide non-essential elements for printing */
+    .header, .footer, .nav-toggle-btn, .search-bar, .btn, .hero .bg-pattern, .hero-banner {
+        display: none !important;
     }
     a {
         color: var(--black);
@@ -1073,5 +1111,12 @@ address { font-style: normal; }
         box-shadow: none;
         border: 1px solid var(--neutral-90);
         page-break-inside: avoid;
+    }
+    .hero {
+        background: transparent;
+        color: var(--black);
+    }
+    .hero-title, .hero-text {
+        color: var(--black);
     }
 }
